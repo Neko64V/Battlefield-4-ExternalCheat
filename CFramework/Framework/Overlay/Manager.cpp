@@ -51,12 +51,11 @@ void Overlay::OverlayManager()
         SetWindowDisplayAffinity(m_Hwnd, WDA_NONE);
 
     // Window Style Changer
-    HWND ForegroundWindow = GetForegroundWindow();
-    LONG TmpLong = GetWindowLong(m_Hwnd, GWL_EXSTYLE);
+    LONG CurrentWindowLong = GetWindowLong(m_Hwnd, GWL_EXSTYLE);
 
-    if (g.g_ShowMenu && MenuStyle != TmpLong)
+    if (g.g_ShowMenu && MenuStyle != CurrentWindowLong)
         SetWindowLong(m_Hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST);
-    else if (!g.g_ShowMenu && ESPStyle != TmpLong)
+    else if (!g.g_ShowMenu && ESPStyle != CurrentWindowLong)
         SetWindowLong(m_Hwnd, GWL_EXSTYLE, WS_EX_TRANSPARENT | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST);
 
     // ShowMenu Toggle
