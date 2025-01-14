@@ -61,15 +61,9 @@ void Overlay::OverlayManager()
 
     // ShowMenu Toggle
     if (GetKeyState(g.g_MenuKey) && !g.g_ShowMenu) {
-        if (ForegroundWindow != m_Hwnd)
-            SetForegroundWindow(m_Hwnd);
-
         g.g_ShowMenu = true;
     }
     else if (!GetKeyState(g.g_MenuKey) && g.g_ShowMenu) {
-        if (ForegroundWindow != CheckHwnd)
-            SetForegroundWindow(CheckHwnd);
-
         g.g_ShowMenu = false;
     }
 
