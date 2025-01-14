@@ -82,7 +82,6 @@ AxisAlignedBox CPlayer::GetAABB()
 {
 	AxisAlignedBox aabb = AxisAlignedBox();
 
-
 	switch (m_iPoseType)
 	{
 	case 0:
