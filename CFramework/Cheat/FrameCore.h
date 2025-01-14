@@ -22,13 +22,13 @@ private:
     std::vector<std::string> SpectatorList;
 
     // Colors
-    ImColor ESP_Default = { 1.f, 1.f, 1.f, 1.f };
-    ImColor ESP_Visible = { 1.f, 0.f, 0.f, 1.f };
-    ImColor ESP_Vehicle = { 1.f, 0.5f, 0.f, 1.f };
-    ImColor ESP_Team    = { 0.f, 1.f, 1.f, 1.f };
-    ImColor ESP_TeamVehicle = { 0.f, 0.25f, 1.f, 1.f };
+    ImColor ESP_Default = { 1.f, 1.f, 1.f, GlobalAlpha };
+    ImColor ESP_Visible = { 1.f, 0.f, 0.f, GlobalAlpha };
+    ImColor ESP_Vehicle = { 1.f, 0.5f, 0.f, GlobalAlpha };
+    ImColor ESP_Team    = { 0.f, 1.f, 1.f, GlobalAlpha };
+    ImColor ESP_TeamVehicle = { 0.f, 0.25f, 1.f, GlobalAlpha };
     ImColor ESP_Shadow  = { 0.f, 0.f, 0.f, 0.3f };
-    ImColor FOV_User = { 1.f, 1.f, 1.f, 1.f };
+    float GlobalAlpha = 0.75f;
     ImColor CrosshairColor = { 0.f, 1.f, 0.f, 1.f };
 
     void DrawLine(Vector2 a, Vector2 b, ImColor color, float width)
@@ -45,8 +45,8 @@ private:
     }
     void HealthBar(int x, int y, int w, int h, int value, int v_max)
     {
-        RectFilled(x, y, x + w, y + h, ImColor(0.f, 0.f, 0.f, 0.725f), 0.f, 0);
-        RectFilled(x, y, x + w, y + ((h / float(v_max)) * (float)value), ImColor(min(510 * (v_max - value) / 100, 255), min(510 * value / 100, 255), 25, 255), 0.0f, 0);
+        RectFilled(x, y, x + w, y + h, ImColor(0.f, 0.f, 0.f, GlobalAlpha), 0.f, 0);
+        RectFilled(x, y, x + w, y + ((h / float(v_max)) * (float)value), ImColor(min(510 * (v_max - value) / 100, 255), min(510 * value / 100, 255), 25, 255), 0.f, 0);
     }
     void Circle(Vector2 pos, float fov_size, ImColor color)
     {
@@ -58,7 +58,7 @@ private:
     }
     void StringEx(Vector2 pos, ImColor color, float font_size, const char* text)
     {
-        ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), font_size, ImVec2((int)pos.x + 1.f, (int)pos.y + 1.f), ImColor(0.f, 0.f, 0.f, 1.f), text, text + strlen(text), 1024, 0);
+        ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), font_size, ImVec2((int)pos.x + 1.f, (int)pos.y + 1.f), ImColor(0.f, 0.f, 0.f, GlobalAlpha), text, text + strlen(text), 1024, 0);
         ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), font_size, ImVec2((int)pos.x, (int)pos.y), color, text, text + strlen(text), 1024, 0);
     }
 };

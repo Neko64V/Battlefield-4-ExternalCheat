@@ -82,6 +82,13 @@ void CFramework::RenderESP()
     // ViewMatrixとかいろいろ
     Matrix ViewMatrix = GetViewMatrix();;
 
+    TEXT_COLOR.Value.w = GlobalAlpha;
+    ESP_Default.Value.w = GlobalAlpha;
+    ESP_Visible.Value.w = GlobalAlpha;
+    ESP_Vehicle.Value.w = GlobalAlpha;
+    ESP_Team.Value.w = GlobalAlpha;
+    ESP_TeamVehicle.Value.w = GlobalAlpha;
+
     // Soldier
     for (auto& player : PlayerList)
     {
@@ -99,7 +106,7 @@ void CFramework::RenderESP()
         else if (!g.g_ESP_Team && pEntity->m_iTeamNum == pLocal->m_iTeamNum)
             continue;
 
-        // Like SourceEngine games
+        // ソースエンジンの m_Collision に該当するのがこれ。あとは一緒
         Vector3 min = pEntity->GetAABB().Min + pEntity->m_vecAbsOrigin;
         Vector3 max = pEntity->GetAABB().Max + pEntity->m_vecAbsOrigin;
 
@@ -219,12 +226,12 @@ void CFramework::RenderESP()
         // Distance
         if (g.g_ESP_Distance) {
             const std::string DistStr = std::to_string((int)pDistance) + "m";
-            StringEx(Vector2(right - Center - (ImGui::CalcTextSize(DistStr.c_str()).x / 2.f), bottom + 1), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), DistStr.c_str());
+            StringEx(Vector2(right - Center - (ImGui::CalcTextSize(DistStr.c_str()).x / 2.f), bottom + 1), TEXT_COLOR, ImGui::GetFontSize(), DistStr.c_str());
         }
 
         // Name
         if (g.g_ESP_Name)
-            StringEx(Vector2(right - Center - (ImGui::CalcTextSize(pEntity->pName.c_str()).x / 2.f), top - ImGui::GetFontSize() - 1), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), pEntity->pName.c_str());
+            StringEx(Vector2(right - Center - (ImGui::CalcTextSize(pEntity->pName.c_str()).x / 2.f), top - ImGui::GetFontSize() - 1), TEXT_COLOR, ImGui::GetFontSize(), pEntity->pName.c_str());
     }
 
     // Vehicle
@@ -330,12 +337,12 @@ void CFramework::RenderESP()
                 // Distance
                 if (g.g_ESP_Distance) {
                     const std::string DistStr = std::to_string((int)pDistance) + "m";
-                    StringEx(Vector2(right - Center - (ImGui::CalcTextSize(DistStr.c_str()).x / 2.f), bottom + 1), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), DistStr.c_str());
+                    StringEx(Vector2(right - Center - (ImGui::CalcTextSize(DistStr.c_str()).x / 2.f), bottom + 1), TEXT_COLOR, ImGui::GetFontSize(), DistStr.c_str());
                 }
 
                 // Name
                 if (g.g_ESP_Name) {
-                    StringEx(Vector2(right - Center - (ImGui::CalcTextSize(pVehicle->pName.c_str()).x / 2.f), top - ImGui::GetFontSize() - 1), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), pVehicle->pName.c_str());
+                    StringEx(Vector2(right - Center - (ImGui::CalcTextSize(pVehicle->pName.c_str()).x / 2.f), top - ImGui::GetFontSize() - 1), TEXT_COLOR, ImGui::GetFontSize(), pVehicle->pName.c_str());
                 }
             }
 

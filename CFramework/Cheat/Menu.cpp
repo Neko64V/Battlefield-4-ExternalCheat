@@ -152,6 +152,7 @@ void CFramework::RenderMenu()
         ImGui::Spacing();
 
         ImGui::BulletText("Alpha");
+        ImGui::CustomSliderFloat("ESP Alpha", "##GlobalAplha", &GlobalAlpha, 0.1f, 1.f, "%.2f");
         ImGui::CustomSliderFloat("ESP Shadow & BoxFilled", "##ESPShadow_", &ESP_Shadow.Value.w, 0.1f, 0.5f, "%.2f");
         break;
     case 1: // misc
