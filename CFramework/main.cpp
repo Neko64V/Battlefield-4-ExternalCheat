@@ -34,38 +34,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
-void Overlay::OverlayLoop()
+void Overlay::OverlayUserFunction()
 {
-	while (g.g_Run)
-	{
-		MSG msg;
-		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+	cx->MiscAll();
 
-		// オーバーレイウィンドウの位置やサイズ等のチェック
-		OverlayManager();
-		cx->MiscAll();
+	cx->RenderInfo();
 
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
+	if (g.g_ESP)
+		cx->RenderESP();
 
-		cx->RenderInfo();
-
-		if (g.g_ESP)
-			cx->RenderESP();
-
-		if (g.g_ShowMenu)
-			cx->RenderMenu();
-
-		ImGui::Render();
-		static const float clear_color_with_alpha[4] = { 0.f, 0.f, 0.f, 0.f };
-		g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
-		g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
-		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-		g_pSwapChain->Present(1, 0);
-	}
+	if (g.g_ShowMenu)
+		cx->RenderMenu();
 }

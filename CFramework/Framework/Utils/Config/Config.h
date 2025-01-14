@@ -20,10 +20,10 @@ struct Globals
     bool g_ESP_Box       = true;
     bool g_ESP_BoxFilled = false;
     bool g_ESP_Line      = false;
-    bool g_ESP_Skeleton  = false;
+    bool g_ESP_Skeleton  = true;
     bool g_ESP_HealthBar = true;
     bool g_ESP_Distance  = true;
-    bool g_ESP_Name      = true;
+    bool g_ESP_Name      = false;
     int g_ESP_BoxType    = 1;
     float g_ESP_MaxDistance = 500.f;
    
