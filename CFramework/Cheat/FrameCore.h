@@ -22,22 +22,18 @@ private:
     std::vector<std::string> SpectatorList;
 
     // Colors
-    ImColor ESP_Default = { 1.f, 1.f, 1.f, GlobalAlpha };
-    ImColor ESP_Visible = { 1.f, 0.f, 0.f, GlobalAlpha };
+    float GlobalAlpha = 0.75f;
+    ImColor ESP_Default = { 1.f, 0.f, 0.f, GlobalAlpha };
+    ImColor ESP_Visible = { 0.f, 1.f, 0.f, GlobalAlpha };
     ImColor ESP_Vehicle = { 1.f, 0.5f, 0.f, GlobalAlpha };
     ImColor ESP_Team    = { 0.f, 1.f, 1.f, GlobalAlpha };
     ImColor ESP_TeamVehicle = { 0.f, 0.25f, 1.f, GlobalAlpha };
     ImColor ESP_Shadow  = { 0.f, 0.f, 0.f, 0.3f };
-    float GlobalAlpha = 0.75f;
     ImColor CrosshairColor = { 0.f, 1.f, 0.f, 1.f };
 
     void DrawLine(Vector2 a, Vector2 b, ImColor color, float width)
     {
         ImGui::GetBackgroundDrawList()->AddLine(ImVec2((int)a.x, (int)a.y), ImVec2((int)b.x, (int)b.y), color, width);
-    }
-    void DrawBox(int x, int y, int w, int h, ImColor color, float width)
-    {
-        
     }
     void RectFilled(float x0, float y0, float x1, float y1, ImColor color, float rounding, int rounding_corners_flags)
     {
@@ -45,8 +41,8 @@ private:
     }
     void HealthBar(int x, int y, int w, int h, int value, int v_max)
     {
-        RectFilled(x, y, x + w, y + h, ImColor(0.f, 0.f, 0.f, GlobalAlpha), 0.f, 0);
-        RectFilled(x, y, x + w, y + ((h / float(v_max)) * (float)value), ImColor(min(510 * (v_max - value) / 100, 255), min(510 * value / 100, 255), 25, 255), 0.f, 0);
+        RectFilled(x - 1, y + 1, x + w + 1, y + h - 1, ESP_Shadow, 0.f, 0);
+        RectFilled(x, y, x + w, y + ((h / float(v_max)) * (float)value), ImColor(min(510 * (v_max - value) / 100, 255), min(510 * value / 100, (int)(255 * GlobalAlpha)), 25, 255), 0.f, 0);
     }
     void Circle(Vector2 pos, float fov_size, ImColor color)
     {

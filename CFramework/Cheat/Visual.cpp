@@ -82,6 +82,7 @@ void CFramework::RenderESP()
     // ViewMatrixとかいろいろ
     Matrix ViewMatrix = GetViewMatrix();;
 
+    // 各種透明度を設定
     TEXT_COLOR.Value.w = GlobalAlpha;
     ESP_Default.Value.w = GlobalAlpha;
     ESP_Visible.Value.w = GlobalAlpha;
@@ -161,15 +162,15 @@ void CFramework::RenderESP()
             if (g.g_ESP_BoxFilled)
                 ImGui::GetBackgroundDrawList()->AddRectFilled(ImVec2(left, top), ImVec2(right, bottom), ESP_Shadow);
 
+            // Box - Shadow
+            DrawLine(Vector2(left - 1, top - 1), Vector2(right + 2, top - 1), ESP_Shadow, 1.f);
+            DrawLine(Vector2(left - 1, top), Vector2(left - 1, bottom + 2), ESP_Shadow, 1.f);
+            DrawLine(Vector2(right + 1, top), Vector2(right + 1, bottom + 2), ESP_Shadow, 1.f);
+            DrawLine(Vector2(left - 1, bottom + 1), Vector2(right + 1, bottom + 1), ESP_Shadow, 1.f);
+
             switch (g.g_ESP_BoxType)
             {
             case 0:
-                // Shadow
-                DrawLine(Vector2(left - 1, top - 1), Vector2(right + 2, top - 1), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, top), Vector2(left - 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(right + 1, top), Vector2(right + 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, bottom + 1), Vector2(right + 1, bottom + 1), ESP_Shadow, 1.f);
-
                 // Main
                 DrawLine(Vector2(left, top), Vector2(right, top), color, 1.f);
                 DrawLine(Vector2(left, top), Vector2(left, bottom), color, 1.f);
@@ -177,12 +178,6 @@ void CFramework::RenderESP()
                 DrawLine(Vector2(left, bottom), Vector2(right + 1, bottom), color, 1.f);
                 break;
             case 1:
-                // Box - Shadow
-                DrawLine(Vector2(left - 1, top - 1), Vector2(right + 2, top - 1), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, top), Vector2(left - 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(right + 1, top), Vector2(right + 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, bottom + 1), Vector2(right + 1, bottom + 1), ESP_Shadow, 1.f);
-
                 DrawLine(Vector2(left, top), Vector2(left + bScale, top), color, 1.f); // Top
                 DrawLine(Vector2(right, top), Vector2(right - bScale, top), color, 1.f);
                 DrawLine(Vector2(left, top), Vector2(left, top + bScale), color, 1.f); // Left
@@ -241,8 +236,8 @@ void CFramework::RenderESP()
         {
             CPlayer* pVehicle = &vehicle;
 
-            pVehicle->Update();
-            pVehicle->VehicleUpdate();
+            if (!pVehicle->Update() || !pVehicle->VehicleUpdate())
+                continue;
 
             // 距離を取得
             const float pDistance = GetDistance(pLocal->m_vecAbsOrigin, pVehicle->m_vecAbsOrigin);
@@ -298,30 +293,6 @@ void CFramework::RenderESP()
             // 色を決める
             ImColor color = pLocal->m_iTeamNum == pVehicle->m_iTeamNum ? ESP_TeamVehicle : ESP_Vehicle;
 
-            // Line
-            if (g.g_ESP_Line)
-                DrawLine(Vector2(g.g_GameRect.right / 2.f, g.g_GameRect.bottom), Vector2(right - (Width / 2), bottom), color, 1.f);
-
-            // Box
-            if (g.g_ESP_Box)
-            {
-                // BoxFilled
-                if (g.g_ESP_BoxFilled)
-                    ImGui::GetBackgroundDrawList()->AddRectFilled(ImVec2(left, top), ImVec2(right, bottom), ESP_Shadow);
-
-                // Box - Shadow
-                DrawLine(Vector2(left - 1, top - 1), Vector2(right + 2, top - 1), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, top), Vector2(left - 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(right + 1, top), Vector2(right + 1, bottom + 2), ESP_Shadow, 1.f);
-                DrawLine(Vector2(left - 1, bottom + 1), Vector2(right + 1, bottom + 1), ESP_Shadow, 1.f);
-
-                // Main
-                DrawLine(Vector2(left, top), Vector2(right, top), color, 1.f);
-                DrawLine(Vector2(left, top), Vector2(left, bottom), color, 1.f);
-                DrawLine(Vector2(right, top), Vector2(right, bottom), color, 1.f);
-                DrawLine(Vector2(left, bottom), Vector2(right + 1, bottom), color, 1.f);
-            }
-
             bool isSoldier = pVehicle->m_fHealth != 0.f ? true : false;
 
             float Health = isSoldier ? pVehicle->m_fVehicleHealth : pVehicle->m_fHealth;
@@ -329,6 +300,26 @@ void CFramework::RenderESP()
 
             if (!isSoldier)
             {
+                // Line
+                if (g.g_ESP_Line)
+                    DrawLine(Vector2(g.g_GameRect.right / 2.f, g.g_GameRect.bottom), Vector2(right - (Width / 2), bottom), color, 1.f);
+
+                // Box
+                if (g.g_ESP_Box)
+                {
+                    // Box - Shadow
+                    DrawLine(Vector2(left - 1, top - 1), Vector2(right + 2, top - 1), ESP_Shadow, 1.f);
+                    DrawLine(Vector2(left - 1, top), Vector2(left - 1, bottom + 2), ESP_Shadow, 1.f);
+                    DrawLine(Vector2(right + 1, top), Vector2(right + 1, bottom + 2), ESP_Shadow, 1.f);
+                    DrawLine(Vector2(left - 1, bottom + 1), Vector2(right + 1, bottom + 1), ESP_Shadow, 1.f);
+
+                    // Main
+                    DrawLine(Vector2(left, top), Vector2(right, top), color, 1.f);
+                    DrawLine(Vector2(left, top), Vector2(left, bottom), color, 1.f);
+                    DrawLine(Vector2(right, top), Vector2(right, bottom), color, 1.f);
+                    DrawLine(Vector2(left, bottom), Vector2(right + 1, bottom), color, 1.f);
+                }
+
                 // Healthbar
                 if (g.g_ESP_HealthBar) {
                     HealthBar(left - 4.f, bottom, 2, -Height, pVehicle->m_fVehicleHealth, pVehicle->m_fVehicleMaxHealth); // Health
@@ -345,28 +336,30 @@ void CFramework::RenderESP()
                     StringEx(Vector2(right - Center - (ImGui::CalcTextSize(pVehicle->pName.c_str()).x / 2.f), top - ImGui::GetFontSize() - 1), TEXT_COLOR, ImGui::GetFontSize(), pVehicle->pName.c_str());
                 }
             }
-
-            // Skeleton
-            if (g.g_ESP_Skeleton && isSoldier)
+            else
             {
-                AllBones bx = pVehicle->GetBoneList(), * bone = &bx;
-
                 // Skeleton
-                for (int j = 0; j < 11; j++)
+                if (g.g_ESP_Skeleton && isSoldier)
                 {
-                    if (Vec3_Empty(bone->bone[aSkeleton[j][0]].pos) || Vec3_Empty(bone->bone[aSkeleton[j][1]].pos))
-                        break;
+                    AllBones bx = pVehicle->GetBoneList(), * bone = &bx;
 
-                    Vector2 vOut0{}, vOut1{};
-                    if (WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[aSkeleton[j][0]].pos, vOut0) && WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[aSkeleton[j][1]].pos, vOut1))
-                        DrawLine(vOut0, vOut1, color, 1);
-                }
+                    // Skeleton
+                    for (int j = 0; j < 11; j++)
+                    {
+                        if (Vec3_Empty(bone->bone[aSkeleton[j][0]].pos) || Vec3_Empty(bone->bone[aSkeleton[j][1]].pos))
+                            break;
 
-                // Head Circle
-                if (!Vec3_Empty(bone->bone[104].pos) || !Vec3_Empty(bone->bone[142].pos)) {
-                    Vector2 vHead{}, vNeck{};
-                    if (WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[104].pos, vHead) && WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[142].pos, vNeck)) {
-                        Circle(vHead, (vNeck.y - vHead.y) * 1.5f, color);
+                        Vector2 vOut0{}, vOut1{};
+                        if (WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[aSkeleton[j][0]].pos, vOut0) && WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[aSkeleton[j][1]].pos, vOut1))
+                            DrawLine(vOut0, vOut1, color, 1);
+                    }
+
+                    // Head Circle
+                    if (!Vec3_Empty(bone->bone[104].pos) || !Vec3_Empty(bone->bone[142].pos)) {
+                        Vector2 vHead{}, vNeck{};
+                        if (WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[104].pos, vHead) && WorldToScreen(ViewMatrix, g.g_GameRect, bone->bone[142].pos, vNeck)) {
+                            Circle(vHead, (vNeck.y - vHead.y) * 1.5f, color);
+                        }
                     }
                 }
             }
