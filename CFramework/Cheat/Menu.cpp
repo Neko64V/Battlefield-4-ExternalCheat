@@ -21,7 +21,7 @@ void CFramework::RenderMenu()
 
     ImGui::SetNextWindowBgAlpha(0.975f);
     ImGui::SetNextWindowSize(ImVec2(725.f, 450.f));
-    ImGui::Begin("Counter-Strike: Source [ EXTERNAL ]", &g.g_ShowMenu, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Battlefield 4 [ EXTERNAL ]", &g.g_ShowMenu, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
     //---// Clild 0 //-----------------------------------//
     ImGui::BeginChild("##SelectChild", ImVec2(150.f, ImGui::GetContentRegionAvail().y), false);
@@ -140,13 +140,11 @@ void CFramework::RenderMenu()
         ImGui::Spacing();
 
         ImGui::BulletText("Main Color");
-        ImGui::ColorEdit4("Default", &ESP_Default.Value.x);
-        ImGui::ColorEdit4("Visible", &ESP_Visible.Value.x);
-
-        ImGui::ColorEdit4("Vehicle", &ESP_Vehicle.Value.x);
-
-        ImGui::ColorEdit4("Team", &ESP_Team.Value.x);
-        ImGui::ColorEdit4("Team Vehicle", &ESP_TeamVehicle.Value.x);
+        ImGui::ColorEdit3("Default", &ESP_Default.Value.x);
+        ImGui::ColorEdit3("Visible", &ESP_Visible.Value.x);
+        ImGui::ColorEdit3("Vehicle", &ESP_Vehicle.Value.x);
+        ImGui::ColorEdit3("Team", &ESP_Team.Value.x);
+        ImGui::ColorEdit3("Team Vehicle", &ESP_TeamVehicle.Value.x);
 
         ImGui::Spacing();
         ImGui::Spacing();
