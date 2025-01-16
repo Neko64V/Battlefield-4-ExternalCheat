@@ -76,4 +76,40 @@ void CFramework::MiscAll()
 {
     if (!pLocal->Update())
         return;
+
+    if (g.g_NoRecoil)
+        NoRecoil();
+}
+
+void CFramework::NoRecoil()
+{
+    if (pLocal->IsInVehicle())
+        return;
+
+    uintptr_t ClientWeapon = m.Read<uintptr_t>(m.m_gProcessBaseAddr + offset::ClientWeapons);
+
+    if (!ClientWeapon)
+        return;
+
+    uintptr_t weaponPtr = m.Read<uintptr_t>(ClientWeapon + 0x128);
+    uintptr_t GunSwayData = m.Read<uintptr_t>(weaponPtr + 0x30); // Sway
+
+    uintptr_t FiringFunctionData = m.Read<uintptr_t>(weaponPtr + 0x10);
+    //cfg.CurrentBPS = m.Read<int>(FiringFunctionData + 0xD8);
+
+    // Recoil / Spread
+    if (g.g_NoRecoil && GunSwayData != NULL && m.Read<float>(GunSwayData + 0x430) != g.g_NoRecoilVal)
+    {
+        m.Write<float>(GunSwayData + 0x430, g.g_NoRecoilVal);
+        m.Write<float>(GunSwayData + 0x438, g.g_NoRecoilVal);
+        m.Write<float>(GunSwayData + 0x434, g.g_NoRecoilVal);
+        m.Write<float>(GunSwayData + 0x43C, g.g_NoRecoilVal);
+    }
+    else if (!g.g_NoRecoil && GunSwayData != NULL && m.Read<float>(GunSwayData + 0x430) != 1.f)
+    {
+        m.Write<float>(GunSwayData + 0x430, 1.f);
+        m.Write<float>(GunSwayData + 0x438, 1.f);
+        m.Write<float>(GunSwayData + 0x434, 1.f);
+        m.Write<float>(GunSwayData + 0x43C, 1.f);
+    }
 }

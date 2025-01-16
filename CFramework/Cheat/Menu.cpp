@@ -74,17 +74,11 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("Name", &g.g_ESP_Name);
         break;
     case 1: // misc
-        ImGui::Text("Misc");
-        ImGui::Separator();
-        ImGui::Spacing();
-
-        ImGui::NewLine();
-
         ImGui::Text("NoRecoil");
         ImGui::Separator();
         ImGui::Spacing();
         ImGui::Checkbox("NoReocil", &g.g_NoRecoil);
-        ImGui::CustomSliderFloat("Recoil percentage", "##recoilptg", &g.g_NoRecoilVal, 0.f, 1.f);
+        ImGui::CustomSliderFloat("Recoil Percentage", "##recoilptg", &g.g_NoRecoilVal, 0.f, 1.f, "%.2f");
         break;
     case 2: // system
         ImGui::Text("System");

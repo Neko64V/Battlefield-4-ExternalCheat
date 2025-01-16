@@ -5,12 +5,14 @@
 #include "../Framework/ImGui/Custom.h"
 #include "SDK/CPlayer/CPlayer.h"
 
+// pb_sv_getss "name or pb id
 class CFramework
 {
 public:
     void UpdateList();
-    void MiscAll();
     Matrix GetViewMatrix();
+
+    void MiscAll();
 
 	void RenderInfo();
 	void RenderMenu();
@@ -20,6 +22,9 @@ private:
     std::vector<CPlayer> PlayerList;
     std::vector<CPlayer> VehicleList;
     std::vector<std::string> SpectatorList;
+
+    // Function
+    void NoRecoil();
 
     // Colors
     float GlobalAlpha = 0.75f;
