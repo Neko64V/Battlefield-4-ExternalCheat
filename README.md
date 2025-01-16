@@ -10,6 +10,10 @@ Battlefield 4用のシンプルな外部チートです。チート開発に対�
 * 観戦者リスト (テストしてない)
 * MenuKey : Insert
 
+## PBSS
+外部チートはPunkbusterによるスクリーンショットに写らないので心配しなくて大丈夫です。
+<img src="pb000013.png" width="100%">
+
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  
 https://learn.microsoft.com/ja-jp/cpp/build/vscpp-step-0-installation?view=msvc-170
