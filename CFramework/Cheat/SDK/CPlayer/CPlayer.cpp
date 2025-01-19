@@ -15,7 +15,6 @@ bool CPlayer::Update()
 	if (IsDead() && !IsInVehicle())
 		return false;
 
-	m_iTeamNum = m.Read<int>(address + offset::PlayerTeam);
 	m_iPoseType = m.Read<int>(soldier + 0x4F0);
 	m_fMaxHealth = m.Read<float>(HealthComponent + 0x24);
 	m_pBoneArray = m.Read<uintptr_t>(m.Read<uintptr_t>(soldier + 0x580) + 0xB0);
@@ -65,6 +64,11 @@ bool CPlayer::IsSpectator()
 	return m.Read<bool>(address + offset::Spectator);
 }
 
+int CPlayer::GetTeamNum()
+{
+	return m.Read<int>(address + offset::PlayerTeam);
+}
+
 std::string CPlayer::GetName()
 {
 	char pName[32]{};
@@ -101,6 +105,11 @@ AxisAlignedBox CPlayer::GetAABB()
 	}
 
 	return aabb;
+}
+
+float CPlayer::GetYaw()
+{
+	return m.Read<float>(soldier + 0x4D8);
 }
 
 float CPlayer::GetVehicleMaxHealth()

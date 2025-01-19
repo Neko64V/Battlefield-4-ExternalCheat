@@ -1,14 +1,12 @@
 #pragma once
 #include "../GameSDK/GameSDK.h"
 
-struct Bone
-{
+struct Bone {
 	Vector3 pos;
 	uint64_t junk0[2];
 };
 
-struct AllBones
-{
+struct AllBones {
 	Bone bone[200];
 };
 
@@ -41,11 +39,13 @@ public:
 	bool IsVisible();
 	bool IsInVehicle();
 	bool IsSpectator();
+	int GetTeamNum();
     std::string GetName();
 	AllBones GetBoneList();
 	AxisAlignedBox GetAABB();
 
 	// Functions - Vehicle
+	float GetYaw();
 	float GetVehicleMaxHealth();
 	Vector3 GetVehiclePosition();
 	AxisAlignedBox GetVehicleAABB();
