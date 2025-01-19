@@ -51,6 +51,7 @@ void Overlay::OverlayManager()
         SetWindowDisplayAffinity(m_Hwnd, WDA_NONE);
 
     // Window Style Changer
+    // or ImGui::GetIO().MousePos.x/y
     LONG CurrentWindowLong = GetWindowLong(m_Hwnd, GWL_EXSTYLE);
 
     if (g.g_ShowMenu && MenuStyle != CurrentWindowLong)
