@@ -33,7 +33,7 @@ public:
 	// uintptr_t m_gEngineDllBaseAddr;
 
 	bool AttachProcess(const char* targetName, int InitMode);
-	void GetBaseAddress(const char* targetName);
+	void GetBaseAddress();
 	void DetachProcess();
 
 	template <typename T>

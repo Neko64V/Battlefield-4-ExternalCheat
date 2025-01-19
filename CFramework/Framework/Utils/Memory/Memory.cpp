@@ -46,15 +46,6 @@ bool Memory::AttachProcess(const char* targetName, int InitMode)
     return true;
 }
 
-void Memory::GetBaseAddress(const char* targetName)
-{
-    // ベースアドレスを取得
-    m_gProcessBaseAddr = GetModuleBase(targetName);
-
-    if (m_gProcessBaseAddr == 0)
-        MessageBoxA(nullptr, "BaseAddress == 0", "WARNING", MB_OK | MB_TOPMOST);
-}
-
 void Memory::DetachProcess()
 {
     CloseHandle(m_hProcess);
