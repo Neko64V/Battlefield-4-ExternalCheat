@@ -14,6 +14,8 @@ public:
 
     void MiscAll();
 
+    void Radar();
+
 	void RenderInfo();
 	void RenderMenu();
 	void RenderESP();
@@ -33,7 +35,7 @@ private:
     ImColor ESP_Vehicle = { 1.f, 0.5f, 0.f, GlobalAlpha };
     ImColor ESP_Team    = { 0.f, 1.f, 1.f, GlobalAlpha };
     ImColor ESP_TeamVehicle = { 0.f, 0.25f, 1.f, GlobalAlpha };
-    ImColor ESP_Shadow  = { 0.f, 0.f, 0.f, 0.3f };
+    ImColor ESP_Shadow  = { 0.f, 0.f, 0.f, 0.15f };
     ImColor CrosshairColor = { 0.f, 1.f, 0.f, 1.f };
 
     void DrawLine(Vector2 a, Vector2 b, ImColor color, float width)

@@ -10,8 +10,8 @@ static int aSkeleton[][2] = {
     { 9, 11 },
     { 11, 15 },
     { 142,109},
-    {109,111 },
-    {111, 115},
+    { 109,111 },
+    { 111, 115},
     { 142, 5 },
     { 5,  188},
     { 5, 197},
@@ -107,7 +107,7 @@ void CFramework::RenderESP()
         else if (!g.g_ESP_Team && pEntity->m_iTeamNum == pLocal->m_iTeamNum)
             continue;
 
-        // ソースエンジンの m_Collision に該当するのがこれ。あとは一緒
+        // ソースエンジンの vecMin/vecMax に該当するのがこれ。あとは一緒
         Vector3 min = pEntity->GetAABB().Min + pEntity->m_vecAbsOrigin;
         Vector3 max = pEntity->GetAABB().Max + pEntity->m_vecAbsOrigin;
 
@@ -192,7 +192,7 @@ void CFramework::RenderESP()
 
         if (g.g_ESP_Skeleton)
         {
-            AllBones bx = pEntity->GetBoneList(), * bone = &bx;
+            AllBones bx = pEntity->GetBoneList(), *bone = &bx;
 
             // Skeleton
             for (int j = 0; j < 11; j++)

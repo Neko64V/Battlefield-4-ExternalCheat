@@ -49,7 +49,9 @@ void CFramework::RenderMenu()
 
     switch (Index)
     {
-    case 0: // visual
+    case 0: 
+        // Visual
+        ImGui::BeginChild("##Left00", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
         ImGui::Text("Visual");
         ImGui::Separator();
         ImGui::Spacing();
@@ -58,8 +60,8 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("Vehicle ESP", &g.g_ESP_Vehicle);
         ImGui::Checkbox("Team ESP", &g.g_ESP_Team);
 
-        ImGui::NewLine();
-        ImGui::Spacing();
+        ImGui::EndChild();
+        ImGui::BeginChild("##Left01", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Options");
         ImGui::Separator();
@@ -72,22 +74,36 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("HealthBar", &g.g_ESP_HealthBar);
         ImGui::Checkbox("Distance", &g.g_ESP_Distance);
         ImGui::Checkbox("Name", &g.g_ESP_Name);
+        ImGui::EndChild();
         break;
-    case 1: // misc
+    case 1: 
+        // Misc
+        ImGui::BeginChild("##Left10", ImVec2(ImGui::GetContentRegionAvail()), true);
+
         ImGui::Text("NoRecoil");
         ImGui::Separator();
         ImGui::Spacing();
         ImGui::Checkbox("NoReocil", &g.g_NoRecoil);
         ImGui::CustomSliderFloat("Recoil Percentage", "##recoilptg", &g.g_NoRecoilVal, 0.f, 1.f, "%.2f");
+
+
+        ImGui::EndChild();
         break;
-    case 2: // system
+    case 2: 
+        // System
+        ImGui::BeginChild("##Left20", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+
         ImGui::Text("System");
         ImGui::Separator();
         ImGui::Spacing();
-        ImGui::Checkbox("StreamProof", &g.g_StreamProof);
 
-        ImGui::Spacing();
-        ImGui::NewLine();
+        ImGui::Checkbox("Crosshair", &g.g_Crosshair);
+        ImGui::Checkbox("StreamProof", &g.g_StreamProof);
+        ImGui::Checkbox("SpectatorList", &g.g_SpectatorList);
+        ImGui::EndChild();
+
+        // Crosshair
+        ImGui::BeginChild("##Left21", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 1.75f), true);
 
         ImGui::Text("Crosshair");
         ImGui::Separator();
@@ -97,6 +113,14 @@ void CFramework::RenderMenu()
         ImGui::CustomSliderInt("CrosshairSize", "##SizeCH", &g.g_CrosshairSize, 1, 10);
         ImGui::ColorEdit4("Color##C", &CrosshairColor.Value.x);
         ImGui::Combo("Type##C", &g.g_CrosshairType, CrosshairList, IM_ARRAYSIZE(CrosshairList));
+        ImGui::EndChild();
+
+        // Coming soon...
+        ImGui::BeginChild("##Left22", ImVec2(ImGui::GetContentRegionAvail()), true);
+
+
+
+        ImGui::EndChild();
         break;
     default:
         break;
@@ -114,26 +138,28 @@ void CFramework::RenderMenu()
 
     switch (Index)
     {
-    case 0: // visual
+    case 0: 
+        // Visual
+        ImGui::BeginChild("##Right00", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 2.85f), true);
         ImGui::Text("ESP Setting");
         ImGui::Separator();
         ImGui::Spacing();
 
         ImGui::CustomSliderFloat("Distance", "##Dist", &g.g_ESP_MaxDistance, 100.f, 2000.f);
 
-        ImGui::Spacing();
-        ImGui::Spacing();
+        ImGui::NewLine();
 
         ImGui::Combo("BoxType", &g.g_ESP_BoxType, BoxTypeList, IM_ARRAYSIZE(BoxTypeList));
 
-        ImGui::NewLine();
-        ImGui::Spacing();
+        ImGui::EndChild();
+
+        // ESP Color
+        ImGui::BeginChild("##Right01", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Colors");
         ImGui::Separator();
         ImGui::Spacing();
 
-        ImGui::BulletText("Main Color");
         ImGui::ColorEdit3("Default", &ESP_Default.Value.x);
         ImGui::ColorEdit3("Visible", &ESP_Visible.Value.x);
         ImGui::ColorEdit3("Vehicle", &ESP_Vehicle.Value.x);
@@ -145,16 +171,33 @@ void CFramework::RenderMenu()
 
         ImGui::CustomSliderFloat("ESP Alpha", "##GlobalAplha", &GlobalAlpha, 0.3f, 1.f, "%.2f");
         ImGui::CustomSliderFloat("ESP Shadow & BoxFilled", "##ESPShadow_", &ESP_Shadow.Value.w, 0.1f, 0.5f, "%.2f");
-        break;
-    case 1: // misc
 
+        ImGui::EndChild();
         break;
-    case 2: // system
+    case 1: 
+        // Misc
+        ImGui::BeginChild("##Right10", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 2.75f), true);
+
+       
+
+        ImGui::EndChild();
+        break;
+    case 2: 
+        // System
+        ImGui::BeginChild("##Right20", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 1.25f), true);
+
+        ImGui::EndChild();
+
+        // Exit Button
+        ImGui::BeginChild("##Right21", ImVec2(ImGui::GetContentRegionAvail()), true);
+
         ImGui::Text("Exit");
         ImGui::Separator();
         ImGui::Spacing();
         if (ImGui::Button("Exit", ImVec2(ImGui::GetContentRegionAvail().x, 30.f)))
             g.g_Run = false;
+
+        ImGui::EndChild();
         break;
     default:
         break;
