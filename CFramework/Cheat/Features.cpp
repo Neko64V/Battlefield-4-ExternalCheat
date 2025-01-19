@@ -2,8 +2,7 @@
 
 const int ReadCount = 72;
 
-struct Player
-{
+struct Player {
     uintptr_t address[ReadCount];
 };
 
@@ -38,13 +37,19 @@ void CFramework::UpdateList()
                     continue;
 
                 if (p.IsSpectator()) {
+                    // Spectator ?
                     spectator_list.push_back(p.GetName());
                 }
                 else if (p.IsInVehicle()) {
+                    // InVehicle?
                     p.pName = p.GetName();
                     vehicle_list.push_back(p);
                 }
                 else {
+                    // TeamCheck
+                    if (!g.g_ESP_Team && pLocal->GetTeamNum() == p.GetTeamNum())
+                        continue;
+
                     p.pName = p.GetName();
                     player_list.push_back(p);
                 }
